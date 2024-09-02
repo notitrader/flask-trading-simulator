@@ -4,71 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contract-Based Trading Simulator</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container mt-5">
         <h1>Contract-Based Trading Simulator</h1>
-        <p>Hi I'm Noti Trader and this is my trading simulator</p>
-        
-        <form method="POST">
-            <label for="contracts">Number of Contracts:</label>
-            <input type="number" id="contracts" name="contracts" min="1" max="4" value="1">
-
-            <label for="min_ticks_profit">Minimum Profit Ticks:</label>
-            <input type="number" id="min_ticks_profit" name="min_ticks_profit" min="1" max="300" value="3">
-
-            <label for="max_ticks_profit">Maximum Profit Ticks:</label>
-            <input type="number" id="max_ticks_profit" name="max_ticks_profit" min="1" max="300" value="7">
-
-            <label for="ticks_loss">Loss Ticks:</label>
-            <input type="number" id="ticks_loss" name="ticks_loss" min="1" max="200" value="5">
-
-            <label for="tick_value">Tick Value ($):</label>
-            <input type="number" id="tick_value" name="tick_value" step="0.01" value="12.5">
-
-            <label for="fee_per_contract">Fee per Contract ($):</label>
-            <input type="number" id="fee_per_contract" name="fee_per_contract" step="0.01" value="2.5">
-
-            <label for="num_trades">Number of Trades:</label>
-            <input type="number" id="num_trades" name="num_trades" min="1" max="2000" value="200">
-
-            <label for="breakeven_trades">Breakeven Trades (%):</label>
-            <input type="number" id="breakeven_trades" name="breakeven_trades" min="0" max="100" value="10">
-
-            <label for="win_rate">Win Percentage (%):</label>
-            <input type="number" id="win_rate" name="win_rate" min="0" max="100" value="60">
-
-            <label for="num_variations">Number of Variations:</label>
-            <input type="number" id="num_variations" name="num_variations" min="1" max="50" value="10">
-
-            <label for="selected_variation">Select Variation to Display:</label>
-            <select id="selected_variation" name="selected_variation">
-                <option value="All Variations">All Variations</option>
-                <!-- Dynamic Options for Variations -->
-                {% for col in df_combined_html.columns %}
-                <option value="{{ col }}">{{ col }}</option>
-                {% endfor %}
-            </select>
-
-            <button type="submit">Run Simulation</button>
-        </form>
-
-        {% if df_combined_html %}
-            <h2>Simulation Results</h2>
+        {% if avg_profit is not None %}
             <p>Average Cumulative Profits: ${{ avg_profit }}</p>
             <p>Maximum Drawdown: ${{ max_drawdown }}</p>
             <p>Sharpe Ratio: {{ sharpe_ratio }}</p>
-
-            <div>
-                {{ df_combined_html|safe }}
-            </div>
-
-            <form method="POST" action="/download">
-                <input type="hidden" name="csv_data" value="{{ df_combined_html }}">
-                <button type="submit">Download as CSV</button>
-            </form>
         {% endif %}
-    </div>
-</body>
-</html>
+
+        <form method="POST">
+            <!-- Campi del form per configurare la simulazione -->
+            <div class="form-group">
+                <label for="contracts">Number of Contracts</label>
+                <select id="contracts" name="contracts" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="min_ticks_profit">Minimum Profit Ticks</label>
+                <input type="number" id="min_ticks_profit" name="min_ticks_profit" class="form-control" min="1" max="300" value="3">
+            </div>
+            <div class="form-group">
+                <label for="max_ticks_profit">Maximum Profit Ticks</label>
+                <input type="number" id="max_ticks_profit" name="max_ticks_profit" class="form-control" min="1" max="300" value="7">
+            </div>
+            <div class="form-group">
+                <label for="ticks_loss">Loss Ticks</label>
+                <input type="number" id="ticks_loss" name="ticks_loss" class="form-control" min="1" max="200" value="5">
+            </div>
+            <div class="form-group">
+                <label for="tick_value">Tick Value ($)</label>
+                <input type="number" id="tick_value" name="tick_value" class="form-control" step="0.01" value="12.5">
+            </div>
+            <div class="form-group">
+                <label for="fee_per_contract">Fee per Contract ($)</label>
+                <input type="number" id="fee_per_contract" name="fee_per_contract" class="form-control" step="0.01" value="2.5">
+            </div>
+            <div class="form-group">
+                <label for="num_trades">Number of Trades</label>
+                <input type="number" id="num_trades" name="num_trades" class="form-control" min="1" max="2000" value="200">
+            </div>
+            <div class="form-group">
+                <label for="breakeven_trades">Breakeven Trades (%)</label>
+                <input type="number" id="breakeven_trades" name="breakeven_trades" class="form-control" min="0" max="100" value="10">
+            </div>
+            <div class="form-group">
+                <label for="win_rate">Win Percentage (%)</label>
+                <input type="
