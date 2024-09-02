@@ -9,11 +9,12 @@
 <body>
     <div class="container mt-5">
         <h1>Contract-Based Trading Simulator</h1>
-        {% if avg_profit is not None %}
-            <p>Average Cumulative Profits: ${{ avg_profit }}</p>
-            <p>Maximum Drawdown: ${{ max_drawdown }}</p>
-            <p>Sharpe Ratio: {{ sharpe_ratio }}</p>
-        {% endif %}
+        {% if avg_profit is not none %}
+    <p>Average Cumulative Profits: ${{ avg_profit }}</p>
+    <p>Maximum Drawdown: ${{ max_drawdown }}</p>
+    <p>Sharpe Ratio: {{ sharpe_ratio }}</p>
+{% endif %}
+
 
         <form method="POST">
             <!-- Campi del form per configurare la simulazione -->
