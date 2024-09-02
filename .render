@@ -1,0 +1,5 @@
+type: web
+name: flask-trading-simulator
+env: python
+buildCommand: ""
+startCommand: gunicorn app:app
