@@ -70,4 +70,61 @@
                 <input type="number" id="max_ticks_profit" name="max_ticks_profit" class="form-control" min="1" max="300" value="7">
             </div>
             <div class="form-group">
-                <label for="ticks_loss">Loss Ticks</label
+                <label for="ticks_loss">Loss Ticks</label>
+                <input type="number" id="ticks_loss" name="ticks_loss" class="form-control" min="1" max="200" value="5">
+            </div>
+            <div class="form-group">
+                <label for="tick_value">Tick Value ($)</label>
+                <input type="number" id="tick_value" name="tick_value" class="form-control" step="0.01" value="12.5">
+            </div>
+            <div class="form-group">
+                <label for="fee_per_contract">Fee per Contract ($)</label>
+                <input type="number" id="fee_per_contract" name="fee_per_contract" class="form-control" step="0.01" value="2.5">
+            </div>
+            <div class="form-group">
+                <label for="num_trades">Number of Trades</label>
+                <input type="number" id="num_trades" name="num_trades" class="form-control" min="1" max="2000" value="200">
+            </div>
+            <div class="form-group">
+                <label for="breakeven_trades">Breakeven Trades (%)</label>
+                <input type="number" id="breakeven_trades" name="breakeven_trades" class="form-control" min="0" max="100" value="10">
+            </div>
+            <div class="form-group">
+                <label for="win_rate">Win Percentage (%)</label>
+                <input type="number" id="win_rate" name="win_rate" class="form-control" min="0" max="100" value="60">
+            </div>
+            <div class="form-group">
+                <label for="num_variations">Number of Variations</label>
+                <input type="number" id="num_variations" name="num_variations" class="form-control" min="1" max="50" value="10">
+            </div>
+            <div class="form-group">
+                <label for="selected_variation">Select Variation to Display</label>
+                <select id="selected_variation" name="selected_variation" class="form-control">
+                    <option value="All Variations">All Variations</option>
+                    <!-- Qui puoi aggiungere altre opzioni dinamiche se necessario -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Run Simulation</button>
+        </form>
+
+        {% if df_combined_html %}
+            <h2 class="mt-5">Simulation Results</h2>
+            <div>{{ df_combined_html|safe }}</div>
+        {% else %}
+            <p class="mt-5">No data available to display.</p>
+        {% endif %}
+
+        {% if graph_image %}
+            <h2 class="mt-5">Cumulative Profit Chart</h2>
+            <img src="data:image/png;base64,{{ graph_image }}" class="img-fluid" alt="Cumulative Profit Chart">
+        {% endif %}
+
+        {% if df_combined_html %}
+            <form method="POST" action="/download">
+                <input type="hidden" name="csv_data" value="{{ df_combined_html }}">
+                <button type="submit" class="btn btn-secondary mt-3">Download as CSV</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>
