@@ -8,13 +8,30 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body class="app">
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-header">
-                <h1 class="header-title">Contract-Based Trading Simulator</h1>
+<body class="body">
+    <div class="wrapper">
+        <!-- Left Sidebar -->
+        <div class="left-side">
+            <div class="logo">
+                <h1>Trading Simulator</h1>
             </div>
-            <div class="card-body">
+            <div class="left-content">
+                <ul>
+                    <li class="active"><a href="#"><span>🏠</span>Home</a></li>
+                    <!-- Add more navigation items if needed -->
+                </ul>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 <a href="#">Your Company</a></p>
+            </div>
+        </div>
+
+        <!-- Right Content Area -->
+        <div class="right-side">
+            <div class="right-content">
+                <h1 class="header-title">Contract-Based Trading Simulator</h1>
+
+                <!-- Simulation Form -->
                 <form method="POST">
                     <div class="form-group">
                         <label for="contracts" class="form-label">Number of Contracts</label>
@@ -69,44 +86,41 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Run Simulation</button>
                 </form>
-            </div>
-        </div>
 
-        {% if df_combined_html %}
-        <div class="card mt-5">
-            <div class="card-header">
-                <h2 class="header-title">Simulation Results</h2>
-            </div>
-            <div class="card-body">
-                <div>{{ df_combined_html|safe }}</div>
-                <p class="text-muted">Average Cumulative Profits: ${{ avg_profit }}</p>
-                <p class="text-muted">Maximum Drawdown: ${{ max_drawdown }}</p>
-                <p class="text-muted">Sharpe Ratio: {{ sharpe_ratio }}</p>
-            </div>
-        </div>
-        {% endif %}
+                <!-- Display Results -->
+                {% if df_combined_html %}
+                <div class="card mt-5">
+                    <h2 class="header-title">Simulation Results</h2>
+                    <div class="content">
+                        <div>{{ df_combined_html|safe }}</div>
+                        <p class="text-muted">Average Cumulative Profits: ${{ avg_profit }}</p>
+                        <p class="text-muted">Maximum Drawdown: ${{ max_drawdown }}</p>
+                        <p class="text-muted">Sharpe Ratio: {{ sharpe_ratio }}</p>
+                    </div>
+                </div>
+                {% endif %}
 
-        {% if graph_image %}
-        <div class="card mt-5">
-            <div class="card-header">
-                <h2 class="header-title">Cumulative Profit Chart</h2>
-            </div>
-            <div class="card-body">
-                <img src="data:image/png;base64,{{ graph_image }}" class="img-fluid" alt="Cumulative Profit Chart">
-            </div>
-        </div>
-        {% endif %}
+                {% if graph_image %}
+                <div class="card mt-5">
+                    <h2 class="header-title">Cumulative Profit Chart</h2>
+                    <div class="content">
+                        <img src="data:image/png;base64,{{ graph_image }}" class="img-fluid" alt="Cumulative Profit Chart">
+                    </div>
+                </div>
+                {% endif %}
 
-        {% if df_combined_html %}
-        <div class="card mt-5">
-            <div class="card-body">
-                <form method="POST" action="/download">
-                    <input type="hidden" name="csv_data" value="{{ df_combined_html }}">
-                    <button type="submit" class="btn btn-secondary mt-3">Download as CSV</button>
-                </form>
+                {% if df_combined_html %}
+                <div class="card mt-5">
+                    <div class="content">
+                        <form method="POST" action="/download">
+                            <input type="hidden" name="csv_data" value="{{ df_combined_html }}">
+                            <button type="submit" class="btn btn-secondary mt-3">Download as CSV</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
-        {% endif %}
     </div>
 </body>
 
